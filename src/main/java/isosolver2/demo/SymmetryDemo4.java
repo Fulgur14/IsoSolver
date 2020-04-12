@@ -6,11 +6,11 @@ import isosolver2.SymmetryCombiner;
 public class SymmetryDemo4 {
 
     public static void main(String[] args) {
-        int vertexWeight = 21;
-        int[] cycle1 = new int[]{4,4,4};
-        int[] cycle2 = new int[]{4,4,4};
-        int[] cycle3 = new int[]{5,5,5,5};
-        int[] cycle4 = new int[]{6,6,6,6,6};
+        int vertexWeight = 200;
+        int[] cycle1 = new int[]{48,48,48,48};
+        int[] cycle2 = new int[]{49,49,49,49,49};
+        int[] cycle3 = new int[]{51,51,51,51,51,51};
+        int[] cycle4 = new int[]{52,52,52,52,52,52,52,52,52,52};
         Symmetry symmetryOne = new Symmetry(cycle1);
         Symmetry symmetryTwo = new Symmetry(cycle2);
         Symmetry symmetryThree = new Symmetry(cycle3);
@@ -23,6 +23,6 @@ public class SymmetryDemo4 {
 
         SymmetryCombiner combinedSymmetry = new SymmetryCombiner();
         combinedSymmetry.combineLists(vertexWeight, symmetryOne, symmetryTwo, symmetryThree, symmetryFour);
-        combinedSymmetry.solveCombinations(vertexWeight);
+        combinedSymmetry.solveCombinations();
     }
 }

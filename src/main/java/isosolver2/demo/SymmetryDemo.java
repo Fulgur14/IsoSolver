@@ -9,9 +9,11 @@ import java.util.List;
 
 public class SymmetryDemo {
 	public static void main(String[] args) {
-		int vertexWeight = 19;
-		int[] cycle1 = new int[]{5,5,5,5,5};
-		int[] cycle2 = new int[]{4,4,4};
+		int vertexWeight = 200;
+		int[] cycle1 = new int[]{48,48,48,48};
+		int[] cycle2 = new int[]{52,52,52,52,52,52,52,52,52,52};
+		//int[] cycle2 = new int[]{1,1,1,1,2,1,2,1,1,1,1,2,1,2};
+		//int[] cycle2 = new int[]{1,1,1,2,1,1,1,2,1,1,1,2};
 		Symmetry symmetryOne = new Symmetry(cycle1);
 		Symmetry symmetryTwo = new Symmetry(cycle2);
 
@@ -20,7 +22,7 @@ public class SymmetryDemo {
 
 		SymmetryCombiner combinedSymmetry = new SymmetryCombiner();
 		combinedSymmetry.combineLists(vertexWeight, symmetryOne, symmetryTwo);
-		combinedSymmetry.solveCombinations(vertexWeight);
+		combinedSymmetry.solveCombinations();
 	}
 
 }

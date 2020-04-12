@@ -18,8 +18,8 @@ public class SimpleSymmetryDemo {
 	}
 
 	public static void main(String[] args) {
-		int vertexWeight = 19;
-		int[] cycle1 = new int[]{4,9,9,4,14,5,5,5,5,10,10,5,5,5,5,14};
+		int vertexWeight = 7;
+		int[] cycle1 = new int[]{1,1,2,1,2,1,1,3};
 
 		Symmetry symmetryOne = new Symmetry(cycle1);
 
