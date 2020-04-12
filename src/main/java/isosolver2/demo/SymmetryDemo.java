@@ -1,11 +1,7 @@
 package isosolver2.demo;
 
-import isosolver2.IsohedralTilingSolver2;
-import isosolver2.IsohedralTilingSolver2Data;
 import isosolver2.Symmetry;
 import isosolver2.SymmetryCombiner;
-
-import java.util.List;
 
 public class SymmetryDemo {
 	public static void main(String[] args) {
