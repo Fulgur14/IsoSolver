@@ -107,33 +107,35 @@ public class SymmetryCombiner {
             default: return "(" + datasetIndex + ")";
         }
     }
+    private void printCombo(int i, String[] names) {
+        System.out.println("combo " + (i+1) + "/" + getSizeOfList() + "(size " + combinedList.get(i).getNumEdges() + ")");
+        for (int j = 0; j < combinedList.get(i).getNumEdges(); j++) {
+            System.out.print(names[j] + " ");
+            int k = j;
+            int max = j;
+            boolean cycle = false;
+            while (!cycle) {
+                k = combinedList.get(i).edgeRightNeighbors[k];
+                if (k > max) {
+                    max = k;
+                }
+                if (k == j) {
+                    cycle = true;
+                }
+            }
+            if (max == j) {
+                System.out.print("| ");
+            }
+        }
+        System.out.println();
 
+    }
     public void solveCombinations() {
         for (int i = 0; i < getSizeOfList(); i++) {
             String[] names = namespaces.get(i);
 
             IsohedralTilingSolver2 solver = new IsohedralTilingSolver2(combinedList.get(i));
-
-            System.out.println("combo " + (i+1) + "/" + getSizeOfList() + "(size " + combinedList.get(i).getNumEdges() + ")");
-            for (int j = 0; j < combinedList.get(i).getNumEdges(); j++) {
-                System.out.print(names[j] + " ");
-                int k = j;
-                int max = j;
-                boolean cycle = false;
-                while (!cycle) {
-                    k = combinedList.get(i).edgeRightNeighbors[k];
-                    if (k > max) {
-                        max = k;
-                    }
-                    if (k == j) {
-                        cycle = true;
-                    }
-                }
-                if (max == j) {
-                    System.out.print("| ");
-                }
-            }
-            System.out.println();
+            //printCombo(i,names);
             //combinedList.get(i).printDebugInfo();
 
             List<int[]> solutions = solver.findAllSolutions();

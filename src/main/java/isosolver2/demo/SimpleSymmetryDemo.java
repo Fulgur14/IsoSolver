@@ -3,6 +3,7 @@ package isosolver2.demo;
 import isosolver2.IsohedralTilingSolver2;
 import isosolver2.Symmetry;
 import isosolver2.SymmetryCombiner;
+import isosolver2.SymmetryWithEdgeTypes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,10 +19,11 @@ public class SimpleSymmetryDemo {
 	}
 
 	public static void main(String[] args) {
-		int vertexWeight = 7;
-		int[] cycle1 = new int[]{1,1,2,1,2,1,1,3};
+		int vertexWeight = 54;
+		int[] cycle1 = new int[]{6,9,9};
+		int[] types1 = new int[]{0,0,1};
 
-		Symmetry symmetryOne = new Symmetry(cycle1);
+		SymmetryWithEdgeTypes symmetryOne = new SymmetryWithEdgeTypes(cycle1,types1);
 
 		symmetryOne.createAllSymmetryCycles(vertexWeight);
 
