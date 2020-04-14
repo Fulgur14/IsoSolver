@@ -6,10 +6,6 @@ public class SymmetryWithEdgeTypes {
     final int[] edgeCycle;
     final int[] edgeTypes;
     final int numEdges;
-    int fundamentalRotation;
-    int fundamentalRotationGroup;
-    boolean fundamentalReflection;
-    int fundamentalAxes;
     public ArrayList<IsohedralTilingSolver2Data> symmetryList = new ArrayList<>();
     int symmetryClasses;
 
@@ -32,14 +28,6 @@ public class SymmetryWithEdgeTypes {
         return 0;
     }
 
-    void setFundamentalRotation() {
-        fundamentalRotation = computeFundamentalRotation(edgeCycle,edgeTypes);
-        }
-
-    void setFundamentalRotationGroup() {
-        fundamentalRotationGroup = numEdges / fundamentalRotation;
-    }
-
     int[] reverseArray(int[] edgeCycle) {
         int[] reverseCycle = new int[edgeCycle.length];
         for (int i = 0; i < reverseCycle.length; i++) {
@@ -48,7 +36,7 @@ public class SymmetryWithEdgeTypes {
         return reverseCycle;
     }
 
-    boolean computeFundamentalReflection(int[] edgeCycle) {
+    boolean computeFundamentalReflection(int[] edgeCycle, int[] edgeTypes) {
         int[] reverseCycle = reverseArray(edgeCycle);
         int[] reverseTypes = reverseArray(edgeTypes);
         aa:
@@ -63,10 +51,6 @@ public class SymmetryWithEdgeTypes {
         return false;
     }
 
-    void setFundamentalReflection() {
-        fundamentalReflection = computeFundamentalReflection(edgeCycle);
-    }
-
     int computeFundamentalAxes(boolean fundamentalReflection, int fundamentalRotationGroup) {
         if (fundamentalReflection) {
             return fundamentalRotationGroup;
@@ -74,10 +58,6 @@ public class SymmetryWithEdgeTypes {
         else {
             return 0;
         }
-    }
-
-    void setFundamentalAxes() {
-        fundamentalAxes = computeFundamentalAxes(fundamentalReflection, fundamentalRotationGroup);
     }
 
     IsohedralTilingSolver2Data createSymmetryCycle(int vertexWeight, int[] edgeCycle, int[] edgeTypes, boolean fundamentalReflection, int reflectionParameter) {
@@ -140,10 +120,10 @@ public class SymmetryWithEdgeTypes {
         }
     }
     public void createAllSymmetryCycles(int vertexWeight) {
-        setFundamentalRotation();
-        setFundamentalRotationGroup();
-        setFundamentalReflection();
-        setFundamentalAxes();
+        int fundamentalRotation = computeFundamentalRotation(edgeCycle,edgeTypes);
+        int fundamentalRotationGroup = numEdges / fundamentalRotation;
+        boolean fundamentalReflection = computeFundamentalReflection(edgeCycle,edgeTypes);
+        int fundamentalAxes = computeFundamentalAxes(fundamentalReflection, fundamentalRotationGroup);
 
         for (int i = fundamentalRotation; i <= numEdges; i += fundamentalRotation) {
             if (numEdges % i == 0) {

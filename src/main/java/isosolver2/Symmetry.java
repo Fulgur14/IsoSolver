@@ -8,10 +8,6 @@ public class Symmetry {
 
     final int[] edgeCycle;
     final int numEdges;
-    int fundamentalRotation;
-    int fundamentalRotationGroup;
-    boolean fundamentalReflection;
-    int fundamentalAxes;
     public ArrayList<IsohedralTilingSolver2Data> symmetryList = new ArrayList<>();
     int symmetryClasses;
 
@@ -31,14 +27,6 @@ public class Symmetry {
             return i;
         }
         return 0;
-    }
-
-    void setFundamentalRotation() {
-        fundamentalRotation = computeFundamentalRotation(edgeCycle);
-    }
-
-    void setFundamentalRotationGroup() {
-        fundamentalRotationGroup = numEdges / fundamentalRotation;
     }
 
     int[] reverseArray(int[] edgeCycle) {
@@ -63,10 +51,6 @@ public class Symmetry {
         return false;
     }
 
-    void setFundamentalReflection() {
-        fundamentalReflection = computeFundamentalReflection(edgeCycle);
-    }
-
     int computeFundamentalAxes(boolean fundamentalReflection, int fundamentalRotationGroup) {
         if (fundamentalReflection) {
             return fundamentalRotationGroup;
@@ -74,10 +58,6 @@ public class Symmetry {
         else {
             return 0;
         }
-    }
-
-    void setFundamentalAxes() {
-        fundamentalAxes = computeFundamentalAxes(fundamentalReflection, fundamentalRotationGroup);
     }
 
     IsohedralTilingSolver2Data createSymmetryCycle(int vertexWeight, int[] edgeCycle, boolean fundamentalReflection, int reflectionParameter) {
@@ -134,10 +114,10 @@ public class Symmetry {
     }
 
     public void createAllSymmetryCycles(int vertexWeight) {
-        setFundamentalRotation();
-        setFundamentalRotationGroup();
-        setFundamentalReflection();
-        setFundamentalAxes();
+        int fundamentalRotation = computeFundamentalRotation(edgeCycle);
+        int fundamentalRotationGroup = numEdges / fundamentalRotation;
+        boolean fundamentalReflection = computeFundamentalReflection(edgeCycle);
+        int fundamentalAxes = computeFundamentalAxes(fundamentalReflection, fundamentalRotationGroup);
 
         for (int i = fundamentalRotation; i <= numEdges; i += fundamentalRotation) {
             if (numEdges % i == 0) {
