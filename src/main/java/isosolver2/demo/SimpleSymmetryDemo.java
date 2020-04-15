@@ -42,7 +42,7 @@ public class SimpleSymmetryDemo {
 
 			List<int[]> canonicalSolutions = symmetryOne.symmetryList.get(i).canonicalizeSolutions(solutions);
 
-			if(canonicalSolutions.size() >= 0) {
+			if(canonicalSolutions.size() > 0) {
 				for (String name : names) {
 					System.out.print(name + " ");
 				}

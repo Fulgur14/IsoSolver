@@ -2,6 +2,7 @@ package isosolver2;
 
 import isosolver2.demo.FormatUtils;
 
+import java.text.Format;
 import java.util.ArrayList;
 
 public class SymmetryWithEdgeTypes {
@@ -109,7 +110,6 @@ public class SymmetryWithEdgeTypes {
             int[] leftVertexWeights = new int[edgeCycle.length];
             int[] edgeMirrors = new int[edgeCycle.length];
             int[] reverseCycle = new int[edgeCycle.length];
-            int[] types = new int[edgeCycle.length];
             for (int i = 0; i < edgeCycle.length; i++) {
                 reverseCycle[i] = edgeCycle.length - i - 1;
             }
@@ -118,15 +118,15 @@ public class SymmetryWithEdgeTypes {
                 leftNeighbors[Math.floorMod(i + 1, edgeCycle.length)] = i;
                 leftVertexWeights[Math.floorMod(i + 1, edgeCycle.length)] = edgeCycle[i];
                 edgeMirrors[i] = reverseCycle[Math.floorMod(i + reflectionParameter - 1,edgeCycle.length)];
-                types[i] = edgeTypes[i];
             }
             data.setEdgeRightNeighbors(rightNeighbors);
             data.setEdgeLeftNeighbors(leftNeighbors);
             data.setLeftVertexWeights(leftVertexWeights);
             data.setEdgeMirrors(edgeMirrors);
-            data.setEdgeTypes(types);
-            data.setMatchTypes(types);
+            data.setEdgeTypes(edgeTypes);
+            data.setMatchTypes(edgeTypes);
             data.setEnsureConnectivity(true);
+            System.out.println(reflectionParameter + " " + FormatUtils.stringify(edgeCycle) + " " + FormatUtils.stringify(edgeTypes) + " " + FormatUtils.stringify(reverseCycle) + " " + FormatUtils.stringify(edgeMirrors) + " " + FormatUtils.stringify(edgeTypes));
             return data;
         }
     }
@@ -146,13 +146,13 @@ public class SymmetryWithEdgeTypes {
                     int numAxes = fundamentalAxes*i/numEdges;
                     int[] axis = new int[2];
                     int[] reverseCycle = reverseArray(quotient);
-                    int[] reverseTypes = reverseArray(quotientTypes);
+                    int[] reverseTypes = reverseType(quotientTypes);
                     int axisIndex = 0;
                     int parity = Math.floorMod(numAxes, 2);
                     aa:
                     for (int j = 0; j < i; j++) {
                         for (int k = 0; k < i; k++) {
-                            if ((quotient[k] != reverseCycle[Math.floorMod(j+k, i)]) || (quotientTypes[j] != reverseTypes[Math.floorMod(j+k+1, reverseCycle.length)])) {
+                            if ((quotient[k] != reverseCycle[Math.floorMod(j+k, i)]) || (quotientTypes[k] != reverseTypes[Math.floorMod(j+k, i)])) {
                                 continue aa;
                             }
                         }

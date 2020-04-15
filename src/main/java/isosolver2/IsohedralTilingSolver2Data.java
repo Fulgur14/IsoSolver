@@ -217,7 +217,7 @@ public class IsohedralTilingSolver2Data {
 				throw new IllegalArgumentException("edgeRightNeighbor[" + i + "] is not in bounds");
 			}
 			if (edgeMirrors[i] < 0 || edgeMirrors[i] >= numEdges) {
-				throw new IllegalArgumentException("edgeMirror[" + i + "] is not in bounds");
+				throw new IllegalArgumentException("edgeMirror[" + i + "] is not in bounds (value " + edgeMirrors[i] + ")");
 			}
 			if (leftVertexWeights[i] <= 0) {
 				throw new IllegalArgumentException("Vertex weight inconsistency: all vertex weights must be positive");
