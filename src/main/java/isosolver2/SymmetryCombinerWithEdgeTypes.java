@@ -12,9 +12,11 @@ public class SymmetryCombinerWithEdgeTypes {
 
     public ArrayList<IsohedralTilingSolver2Data> combinedList = new ArrayList<>();
     int sizeOfList;
+    int vertexWeight;
     ArrayList<String[]> namespaces = new ArrayList<>();
+    ArrayList<SymmetryWithEdgeTypes> symmetries = new ArrayList<>();
 
-    public SymmetryCombinerWithEdgeTypes() {}
+    public SymmetryCombinerWithEdgeTypes(int vertexWeight) { this.vertexWeight = vertexWeight; }
 
     /*public SymmetryCombinerWithEdgeTypes(int vertexWeight, int[]... cycles) {
         SymmetryWithEdgeTypes[] symmetries = Arrays.stream(cycles).map(cycle -> {
@@ -24,6 +26,12 @@ public class SymmetryCombinerWithEdgeTypes {
         }).toArray(SymmetryWithEdgeTypes[]::new);
         this.combineLists(vertexWeight, symmetries);
     }*/
+
+    public void addTile(int[] edgeCycle, int[] edgeTypes) {
+        SymmetryWithEdgeTypes sym = new SymmetryWithEdgeTypes(edgeCycle, edgeTypes);
+        sym.createAllSymmetryCycles(vertexWeight);
+        symmetries.add(sym);
+    }
 
     public int getSizeOfList() {
         return sizeOfList;
@@ -62,14 +70,16 @@ public class SymmetryCombinerWithEdgeTypes {
         };
     }
 
-    public void combineLists(int vertexWeight, Symmetry... lists) {
-        List<List<IsohedralTilingSolver2Data>> dataLists = Arrays.stream(lists).map(e->e.symmetryList).collect(Collectors.toList());
+    public void combineLists() {
+        List<List<IsohedralTilingSolver2Data>> dataLists = symmetries.stream().map(e->e.symmetryList).collect(Collectors.toList());
         for (List<IsohedralTilingSolver2Data> dataCombination : iterCartesianProduct(dataLists)) {
             int combinedLength = dataCombination.stream().mapToInt(IsohedralTilingSolver2Data::getNumEdges).sum();
             int[] edgeRightNeighbors = new int[combinedLength];
             int[] edgeLeftNeighbors = new int[combinedLength];
             int[] edgeMirrors = new int[combinedLength];
             int[] leftVertexWeights = new int[combinedLength];
+            int[] edgeTypes = new int[combinedLength];
+            int[] matchTypes = new int[combinedLength];
             String[] names = new String[combinedLength];
             int offset = 0;
             int datasetIndex = 0;
@@ -79,6 +89,8 @@ public class SymmetryCombinerWithEdgeTypes {
                     edgeLeftNeighbors[offset + i] = data.edgeLeftNeighbors[i] + offset;
                     edgeMirrors[offset + i] = data.edgeMirrors[i] + offset;
                     leftVertexWeights[offset + i] = data.leftVertexWeights[i];
+                    edgeTypes[offset + i] = data.edgeTypes[i];
+                    matchTypes[offset + i] = data.matchTypes[i];
                     names[offset + i] = firstMirror(i, data.edgeMirrors) + getSuffix(datasetIndex);
                 }
                 offset += data.numEdges;
@@ -90,7 +102,8 @@ public class SymmetryCombinerWithEdgeTypes {
             combinedData.setEdgeLeftNeighbors(edgeLeftNeighbors);
             combinedData.setEdgeMirrors(edgeMirrors);
             combinedData.setLeftVertexWeights(leftVertexWeights);
-            combinedData.setEdgeTypeSimple();
+            combinedData.setEdgeTypes(edgeTypes);
+            combinedData.setMatchTypes(matchTypes);
             combinedData.setEnsureConnectivity(true);
             combinedList.add(combinedData);
             namespaces.add(names);

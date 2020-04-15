@@ -126,7 +126,6 @@ public class SymmetryWithEdgeTypes {
             data.setEdgeTypes(edgeTypes);
             data.setMatchTypes(edgeTypes);
             data.setEnsureConnectivity(true);
-            System.out.println(reflectionParameter + " " + FormatUtils.stringify(edgeCycle) + " " + FormatUtils.stringify(edgeTypes) + " " + FormatUtils.stringify(reverseCycle) + " " + FormatUtils.stringify(edgeMirrors) + " " + FormatUtils.stringify(edgeTypes));
             return data;
         }
     }
