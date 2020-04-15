@@ -1,5 +1,7 @@
 package isosolver2;
 
+import isosolver2.demo.FormatUtils;
+
 import java.util.ArrayList;
 
 public class SymmetryWithEdgeTypes {
@@ -36,13 +38,22 @@ public class SymmetryWithEdgeTypes {
         return reverseCycle;
     }
 
+    int[] reverseType(int[] edgeTypes) {
+        int[] reverseTypes = new int[edgeTypes.length];
+        reverseTypes[0] = edgeTypes[0];
+        for (int i = 1; i < reverseTypes.length; i++) {
+            reverseTypes[i] = edgeTypes[edgeTypes.length - i];
+        }
+        return reverseTypes;
+    }
+
     boolean computeFundamentalReflection(int[] edgeCycle, int[] edgeTypes) {
         int[] reverseCycle = reverseArray(edgeCycle);
-        int[] reverseTypes = reverseArray(edgeTypes);
+        int[] reverseTypes = reverseType(edgeTypes);
         aa:
         for (int i = 0; i < reverseCycle.length ; i++) {
             for (int j = 0; j < reverseCycle.length; j++) {
-                if ((edgeCycle[j] != reverseCycle[Math.floorMod(i+j, reverseCycle.length)]) || (edgeTypes[j] != reverseTypes[Math.floorMod(i+j+1, reverseCycle.length)])) {
+                if ((edgeCycle[j] != reverseCycle[Math.floorMod(i+j, reverseCycle.length)]) || (edgeTypes[j] != reverseTypes[Math.floorMod(i+j, reverseCycle.length)])) {
                     continue aa;
                 }
             }
