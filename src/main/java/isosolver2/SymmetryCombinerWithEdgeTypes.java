@@ -117,7 +117,7 @@ public class SymmetryCombinerWithEdgeTypes {
             case 1: return "'";
             case 2: return "''";
             case 3: return "'''";
-            default: return "(" + datasetIndex + ")";
+            default: return "@" + datasetIndex;
         }
     }
     private void printCombo(int i, String[] names) {
